@@ -1,0 +1,35 @@
+author: brandond
+description: Implements SSD1306 OLED driver on Mongoose OS
+type: lib
+version: 1.0
+
+platforms: [ esp32 ]
+
+libs:
+  - origin: https://github.com/mongoose-os-libs/i2c
+
+sources:
+  - src
+includes:
+  - include
+
+config_schema:
+  - ["ssd1306", "o", {title: "SSD1306 Settings"}]
+  - ["ssd1306.enable", "b", true, {title: "Enable SSD1306"}]
+  - ["ssd1306.width", "i", 128, {title: "Screen width"}]
+  - ["ssd1306.height", "i", 64, {title: "Screen height"}]
+  - ["ssd1306.address", "i", 0x3c, {title: "Screen controller I2C address"}]
+  - ["ssd1306.i2c", "o", {title: "SSD1306 I2C settings"}]
+  - ["ssd1306.i2c.enable", "b", true, {title: "Enable SSD1306-specific I2C configuration"}]
+  - ["ssd1306.i2c.freq", "i", 400000, {title: "Clock frequency"}]
+  - ["ssd1306.i2c.unit_no", "i", 0, {title: "Which hardware unit to use, 0 or 1"}]
+  - ["ssd1306.i2c.debug", "b" , false, {title: "Debug I2C bus activity"}]
+  - ["ssd1306.i2c.sda_gpio", "i", 5, {title: "GPIO to use for SDA"}]
+  - ["ssd1306.i2c.scl_gpio", "i", 4, {title: "GPIO to use for SCL"}]
+
+tags:
+  - c
+  - i2c
+  - ssd1306
+
+manifest_version: 2017-09-29
