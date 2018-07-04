@@ -40,7 +40,7 @@ let SSD1306 = {
 			GPIO.set_mode(16, GPIO.MODE_OUTPUT);
 			GPIO.set_pull(16, GPIO.PULL_UP);
 			GPIO.swrite(16, 0);
-			Sys.mwait(100);
+			Sys.usleep(100 * 1000);
 			GPIO.swrite(16, 1);
 			this.clear();
 		},
