@@ -37,13 +37,11 @@ let SSD1306 = {
 			let myI2C = I2C.get_default();
 			I2C.write(myI2C, 0x3c, "\0x0", 1, 1);
 			this._oled = this._getGlobal();
-/*
 			GPIO.set_mode(16, GPIO.MODE_OUTPUT);
 			GPIO.set_pull(16, GPIO.PULL_UP);
 			GPIO.write(16, 0);
 			Sys.usleep(100 * 1000);
 			GPIO.write(16, 1);
-*/			
 			this.clear();
 		},
 
@@ -51,8 +49,8 @@ let SSD1306 = {
 			this._clear(this._oled);
 		},
 		
-		refresh: function() {
-			this._refresh(this._oled);
+		refresh: function(force) {
+			this._refresh(this._oled, force);
 		},
 
 		selectFont: function(font) {
