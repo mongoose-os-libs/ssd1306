@@ -51,7 +51,7 @@ let SSD1306 = {
 		},
 		
 		drawStringColor: function(x, y, txt, fg, bg) {
-			this._drawStringColort(this._oled, x, y, txt, fg, bg);
+			this._drawStringColor(this._oled, x, y, txt, fg, bg);
 		},
 
 		drawString: function(x, y, txt) {
