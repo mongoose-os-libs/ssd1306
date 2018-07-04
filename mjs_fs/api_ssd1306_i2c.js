@@ -1,4 +1,5 @@
 load('api_i2c.js');
+load('api_sys.js');
 
 let SSD1306 = {
     // Constants
@@ -36,6 +37,12 @@ let SSD1306 = {
 			let myI2C = I2C.get_default();
 			I2C.write(myI2C, 0x3c, "\0x0", 1, 1);
 			this._oled = this._getGlobal();
+			GPIO.set_mode(16, GPIO.MODE_OUTPUT);
+			GPIO.set_pull(16, GPIO.PULL_UP);
+			GPIO.swrite(16, 0);
+			Sys.mwait(100);
+			GPIO.swrite(16, 1);
+			this.clear();
 		},
 
 		clear: function() {
