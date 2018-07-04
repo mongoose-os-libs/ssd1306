@@ -30,7 +30,7 @@ let SSD1306 = {
 		_getFontC: ffi('int mgos_ssd1306_get_font_c(void *)'),
 		_invertDisplay: ffi('void mgos_ssd1306_invert_display(void *, bool)'),
 		_flipDisplay: ffi('void mgos_ssd1306_flip_display(void *, bool, bool)'),
-		_updateBuffer: ffi('void mgos_ssd1306_update_buffer(void *, int *, int)'),
+		_updateBuffer: ffi('void mgos_ssd1306_update_buffer(void *, void *, int)'),
 		
 		init: function() {
 			let myI2C = I2C.get_default();
