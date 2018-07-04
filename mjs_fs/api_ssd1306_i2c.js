@@ -35,7 +35,7 @@ let SSD1306 = {
 		init: function() {
 			let myI2C = I2C.get_default();
 			I2C.write(myI2C, 0x3c, "\0x0", 1, 1);
-			_oled = this._getGlobal();
+			this._oled = this._getGlobal();
 		},
 
 		clear: function() {
