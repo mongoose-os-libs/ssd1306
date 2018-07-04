@@ -39,9 +39,9 @@ let SSD1306 = {
 			this._oled = this._getGlobal();
 			GPIO.set_mode(16, GPIO.MODE_OUTPUT);
 			GPIO.set_pull(16, GPIO.PULL_UP);
-			GPIO.swrite(16, 0);
+			GPIO.write(16, 0);
 			Sys.usleep(100 * 1000);
-			GPIO.swrite(16, 1);
+			GPIO.write(16, 1);
 			this.clear();
 		},
 
