@@ -652,8 +652,8 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled)
   if (oled == NULL)
     return;
 	
-//  _command (oled, 0xA0);
-//  _command (oled, 0xC0);
+  _command (oled, 0xA0);
+  _command (oled, 0xC0);
   _command (oled, 0xA1);
   _command (oled, 0xC8);
 }
