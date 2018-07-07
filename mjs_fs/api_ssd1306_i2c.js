@@ -308,11 +308,11 @@ let SSD1306 = {
    */
   rotateDisplay: function(alt) {
   	if (alt) {
-			this._command(0xA1);
-			this._command(0xC8);
+			this._command(this._oled, 0xA1);
+			this._command(this._oled, 0xC8);
   	} else {
-			this._command(0xA0);
-			this._command(0xC0);
+			this._command(this._oled, 0xA0);
+			this._command(this._oled, 0xC0);
 		}
   },
 
