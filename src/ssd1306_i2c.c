@@ -654,6 +654,8 @@ void mgos_ssd1306_flip_display (struct mgos_ssd1306 *oled, bool horizontal, bool
 	
   _command (oled, 0xA0);
   _command (oled, 0xC0);
+  _command (oled, 0xA1);
+  _command (oled, 0xC8);
 //A0 and C0
 //A1 and C8
 
