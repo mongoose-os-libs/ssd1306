@@ -285,6 +285,8 @@ extern "C"
    */
   void mgos_ssd1306_update_buffer (struct mgos_ssd1306 *oled, uint8_t * data, uint16_t length);
 
+  void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

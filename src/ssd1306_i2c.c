@@ -652,8 +652,8 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled)
   if (oled == NULL)
     return;
 	
-  _command (oled, 0xA0);
-  _command (oled, 0xC0);
+//  _command (oled, 0xA0);
+//  _command (oled, 0xC0);
   _command (oled, 0xA1);
   _command (oled, 0xC8);
 }
@@ -679,6 +679,14 @@ void mgos_ssd1306_update_buffer (struct mgos_ssd1306 *oled, uint8_t * data, uint
   oled->refresh_bottom = oled->height - 1;
   oled->refresh_top = 0;
   oled->refresh_left = 0;
+}
+
+void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd)
+{
+  if (oled == NULL)
+    return;
+
+  _command (oled, cmd);
 }
 
 bool mgos_ssd1306_init (void)

@@ -34,6 +34,7 @@ let SSD1306 = {
   _flipDisplay: ffi('void mgos_ssd1306_flip_display(void *, bool, bool)'),
   _rotateDisplay: ffi('void mgos_ssd1306_rotate_display(void *)'),
   _updateBuffer: ffi('void mgos_ssd1306_update_buffer(void *, void *, int)'),
+  _command: ffi('void mgos_ssd1306_command(void *, int cmd)');
   
   init: function() {
     let myI2C = I2C.get_default();
