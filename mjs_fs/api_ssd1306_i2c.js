@@ -24,7 +24,7 @@ load('api_i2c.js');
 load('api_sys.js');
 load('api_config.js');
 
-SSD1306 = {
+let SSD1306 = {
 
   // some constant values
   SSD1306_COLOR_TRANSPARENT: -1,	//< Transparent (not drawing)
