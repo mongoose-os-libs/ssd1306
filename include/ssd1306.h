@@ -270,6 +270,13 @@ extern "C"
   void mgos_ssd1306_flip_display (struct mgos_ssd1306 *oled, bool horizontal, bool vertical);
 
   /**
+   * @brief Rotates the display with an amount of 180 degrees
+   *
+   * @param oled SSD1306 driver handle.
+   */
+	void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled);
+
+  /**
    * @brief Copy pre-rendered bytes directly into the bitmap.
    *
    * @param oled SSD1306 driver handle.

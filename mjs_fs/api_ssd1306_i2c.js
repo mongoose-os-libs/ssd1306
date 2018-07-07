@@ -32,19 +32,21 @@ let SSD1306 = {
   _getFontC: ffi('int mgos_ssd1306_get_font_c(void *)'),
   _invertDisplay: ffi('void mgos_ssd1306_invert_display(void *, bool)'),
   _flipDisplay: ffi('void mgos_ssd1306_flip_display(void *, bool, bool)'),
+  _rotateDisplay: ffi('mgos_ssd1306_rotate_display(void *)'),
   _updateBuffer: ffi('void mgos_ssd1306_update_buffer(void *, void *, int)'),
   
   init: function() {
     let myI2C = I2C.get_default();
     I2C.write(myI2C, Cfg.get('ssd1306.address'), "\0x0", 1, 1);
     this._oled = this._getGlobal();
-/*    
-    GPIO.set_mode(16, GPIO.MODE_OUTPUT);
-    GPIO.set_pull(16, GPIO.PULL_UP);
-    GPIO.write(16, 0);
-    Sys.usleep(100 * 1000);
-    GPIO.write(16, 1);
-*/    
+    let rstPin = Cfg.get('ssd1306.rst_pin');
+    if (rstPin) {
+	    GPIO.set_mode(rstPin, GPIO.MODE_OUTPUT);
+	    GPIO.set_pull(rstPin, GPIO.PULL_UP);
+	    GPIO.write(rstPin, 0);
+	    Sys.usleep(100 * 1000);
+	    GPIO.write(rstPin, 1);
+		}    
     this.clear();
   },
 
@@ -122,6 +124,10 @@ let SSD1306 = {
 
   flipDisplay: function(horizontal, vertical) {
     this._flipDisplay(this._oled, horizontal, vertical);
+  },
+
+  rotateDisplay: function() {
+    this._rotateDisplay(this._oled);
   },
 
   updateBuffer: function(data, length) {
