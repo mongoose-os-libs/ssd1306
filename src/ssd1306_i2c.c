@@ -20,16 +20,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  **/
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "mgos_i2c.h"
-
-#include "common/cs_dbg.h"
-
 #include "ssd1306.h"
-#include "fonts.h"
 
 #ifdef __GNUC__
 #define UNUSED(x) x __attribute__((unused))
@@ -676,9 +667,11 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt)
 
 	if (alt) {
 	  _command (oled, 0xA1);
+	  mgos_msleep(100);
 	  _command (oled, 0xC8);
 	}	else {
 	  _command (oled, 0xA0);
+	  mgos_msleep(100);
 	  _command (oled, 0xC0);
 	}
 }

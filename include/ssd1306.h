@@ -24,12 +24,21 @@
 #ifndef SSD1306_H
 #define SSD1306_H
 
-#include "mgos_features.h"
-
+#include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
+
+#include "mgos_features.h"
+#include "mgos_i2c.h"
+
+#include "common/cs_dbg.h"
 
 #include "mgos_init.h"
 #include "mgos_sys_config.h"
+#include "mgos_sys.h"
+
+#include "fonts.h"
 
 #ifdef __cplusplus
 extern "C"
