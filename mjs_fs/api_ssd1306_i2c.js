@@ -218,7 +218,7 @@ let SSD1306 = {
    * @return Character width in pixels
    */
   drawChar: function(x, y, chr, fg, bg) {
-    this._drawChar(this._oled, x, y, chr, fg, bg);
+		return this._drawChar(this._oled, x, y, chr, fg, bg);
   },
 
   /**
@@ -233,7 +233,7 @@ let SSD1306 = {
    * @return String witdth in pixels.
    */
   drawStringColor: function(x, y, txt, fg, bg) {
-    this._drawStringColor(this._oled, x, y, txt, fg, bg);
+    return this._drawStringColor(this._oled, x, y, txt, fg, bg);
   },
 
   /**
@@ -246,7 +246,7 @@ let SSD1306 = {
    * @return String width in pixels.
    */
   drawString: function(x, y, txt) {
-    this._drawStringColor(this._oled, x, y, txt);
+    return this._drawStringColor(this._oled, x, y, txt);
   },
 
   /**
@@ -257,7 +257,7 @@ let SSD1306 = {
    * @return String width in pixels.
    */
   measureString: function(txt) {
-    this._measureString(this._oled, txt);
+    return this._measureString(this._oled, txt);
   },
 
   /**
@@ -267,7 +267,7 @@ let SSD1306 = {
    * @return Font height in pixels.
    */
   getFontHeight: function() {
-    this._getFontHeight(this._oled);
+    return this._getFontHeight(this._oled);
   },
 
   /**
@@ -277,7 +277,7 @@ let SSD1306 = {
    * @return Font inter-character spacing in pixels.
    */
   getFontC: function() {
-    this._getFontC(this._oled);
+    return this._getFontC(this._oled);
   },
 
   /**
