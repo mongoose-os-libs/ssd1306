@@ -66,7 +66,7 @@ let SSD1306 = {
     let myI2C = I2C.get_default();
     I2C.write(myI2C, Cfg.get('ssd1306.address'), "\0x0", 1, 1);
     this._oled = this._getGlobal();
-    let rstPin = Cfg.get('ssd1306.rst_pin');
+    let rstPin = Cfg.get('ssd1306.rst_gpio');
     if (rstPin) {
 	    GPIO.set_mode(rstPin, GPIO.MODE_OUTPUT);
 	    GPIO.set_pull(rstPin, GPIO.PULL_UP);
