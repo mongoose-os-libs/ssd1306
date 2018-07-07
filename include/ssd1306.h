@@ -294,10 +294,11 @@ extern "C"
 
   /**
    * @brief Rotates the display with an amount of 180 degrees
-   *
+
    * @param oled SSD1306 driver handle.
+   * @param bool alt, if the current way won't work, try the second one
    */
-	void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled);
+	void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt);
 
   /**
    * @brief Copy pre-rendered bytes directly into the bitmap.
@@ -308,6 +309,11 @@ extern "C"
    */
   void mgos_ssd1306_update_buffer (struct mgos_ssd1306 *oled, uint8_t * data, uint16_t length);
 
+  /**
+   * @brief Sends a command without parameters to the display
+   *
+   * @param int command
+   */
   void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd);
 
 #ifdef __cplusplus

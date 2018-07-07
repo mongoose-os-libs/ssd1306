@@ -669,15 +669,18 @@ void mgos_ssd1306_invert_display (struct mgos_ssd1306 *oled, bool invert)
     _command (oled, 0xa6);      // SSD1306_NORMALDISPLAY
 }
 
-void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled)
+void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt)
 {
   if (oled == NULL)
     return;
-	
-//  _command (oled, 0xA0);
-//  _command (oled, 0xC0);
-  _command (oled, 0xA1);
-  _command (oled, 0xC8);
+
+	if (alt) {
+	  _command (oled, 0xA1);
+	  _command (oled, 0xC8);
+	}	else {
+	  _command (oled, 0xA0);
+	  _command (oled, 0xC0);
+	}
 }
 
 void mgos_ssd1306_flip_display (struct mgos_ssd1306 *oled, bool horizontal, bool vertical)
