@@ -667,12 +667,14 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt)
 
 	if (alt) {
 	  _command (oled, 0xA1);
-	  mgos_msleep(100);
+	  mgos_msleep(150);
 	  _command (oled, 0xC8);
+	  mgos_msleep(150);
 	}	else {
 	  _command (oled, 0xA0);
-	  mgos_msleep(100);
+	  mgos_msleep(150);
 	  _command (oled, 0xC0);
+	  mgos_msleep(150);
 	}
 }
 
