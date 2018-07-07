@@ -304,9 +304,16 @@ let SSD1306 = {
   /**
    * @brief Rotates the display with an amount of 180 degrees
    *
+   * @param boolean alt, if the current way won't work, try the second one
    */
-  rotateDisplay: function() {
-    this._rotateDisplay(this._oled);
+  rotateDisplay: function(alt) {
+  	if (alt) {
+			this._command(0xA1);
+			this._command(0xC8);
+  	} else {
+			this._command(0xA0);
+			this._command(0xC0);
+		}
   },
 
   /**
