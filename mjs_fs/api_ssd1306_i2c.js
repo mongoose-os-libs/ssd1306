@@ -57,7 +57,7 @@ let SSD1306 = {
   _flipDisplay: ffi('void mgos_ssd1306_flip_display(void *, bool, bool)'),
   _rotateDisplay: ffi('void mgos_ssd1306_rotate_display(void *)'),
   _updateBuffer: ffi('void mgos_ssd1306_update_buffer(void *, void *, int)'),
-  _command: ffi('void mgos_ssd1306_command(void *, int)');
+  _command: ffi('void mgos_ssd1306_command(void *, int)'),
   
   /**
    * @brief Init function, need to be called before using the api
