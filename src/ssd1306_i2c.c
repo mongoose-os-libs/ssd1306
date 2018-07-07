@@ -524,7 +524,7 @@ mgos_ssd1306_draw_char (struct mgos_ssd1306 *oled, uint8_t x, uint8_t y, unsigne
   if (oled->font == NULL)
     return 0;
 
-  LOG (LL_INFO, ("Drawing %c at %d,%d", c, x, y));
+  LOG (LL_DEBUG, ("Drawing %c at %d,%d", c, x, y));
   // we always have space in the font set
   if ((c < oled->font->char_start) || (c > oled->font->char_end))
     c = ' ';
@@ -651,11 +651,16 @@ void mgos_ssd1306_flip_display (struct mgos_ssd1306 *oled, bool horizontal, bool
 {
   if (oled == NULL)
     return;
+	
+  _command (oled, 0xA0);
+  _command (oled, 0xC0);
+//A0 and C0
+//A1 and C8
 
-  uint8_t compins = oled->height < 64 ? 0x02 : 0x12;
-  _command (oled, 0xda);
-  _command (oled, compins | (horizontal << 5));
-  _command (oled, vertical ? 0xc0 : 0xc8);
+//  uint8_t compins = oled->height < 64 ? 0x02 : 0x12;
+//  _command (oled, 0xda);
+//  _command (oled, compins | (horizontal << 5));
+//  _command (oled, vertical ? 0xc0 : 0xc8);
 }
 
 void mgos_ssd1306_update_buffer (struct mgos_ssd1306 *oled, uint8_t * data, uint16_t length)
