@@ -668,14 +668,14 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt)
 	//  a little hack: the commands must be delayed
 	if (alt) {
 	  _command (oled, 0xA1);
-	  mgos_msleep(150);
+	  mgos_msleep(250);
 	  _command (oled, 0xC8);
-	  mgos_msleep(150);
+	  mgos_msleep(250);
 	}	else {
 	  _command (oled, 0xA0);
-	  mgos_msleep(150);
+	  mgos_msleep(250);
 	  _command (oled, 0xC0);
-	  mgos_msleep(150);
+	  mgos_msleep(250);
 	}
 }
 
@@ -686,11 +686,11 @@ void mgos_ssd1306_flip_display (struct mgos_ssd1306 *oled, bool horizontal, bool
 
   uint8_t compins = oled->height < 64 ? 0x02 : 0x12;
   _command (oled, 0xda);
-	  mgos_msleep(150);
+	  mgos_msleep(250);
   _command (oled, compins | (horizontal << 5));
-	  mgos_msleep(150);
+	  mgos_msleep(250);
   _command (oled, vertical ? 0xc0 : 0xc8);
-	  mgos_msleep(150);
+	  mgos_msleep(250);
 }
 
 void mgos_ssd1306_update_buffer (struct mgos_ssd1306 *oled, uint8_t * data, uint16_t length)
