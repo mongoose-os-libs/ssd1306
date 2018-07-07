@@ -1,6 +1,6 @@
 load('api_i2c.js');
 load('api_sys.js');
-load('api_cfg.js');
+load('api_config.js');
 
 let SSD1306 = {
   // Constants
