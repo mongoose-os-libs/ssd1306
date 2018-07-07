@@ -325,7 +325,7 @@ let SSD1306 = {
    * @param int command
    */
   command: function(cmd) {
-    this._updateBuffer(this._oled, cmd);
+    this._command(this._oled, cmd);
   },
 
 };
