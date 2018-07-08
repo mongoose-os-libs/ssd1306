@@ -680,7 +680,7 @@ void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd) {
 }
 
 void mgos_ssd1306_start (struct mgos_ssd1306 *oled) {
-  int rstPin = mgos_sys_config_get_ssd1306_i2c_rst_gpio();
+  int rstPin = mgos_sys_config_get_ssd1306_rst_gpio();
 	if (rstPin) {
 		LOG (LL_INFO, ("Found reset pin %d", rstPin));
 		if (rstPin >= 0) {
