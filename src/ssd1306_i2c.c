@@ -681,15 +681,13 @@ void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd) {
 
 void mgos_ssd1306_start (struct mgos_ssd1306 *oled) {
   int rstPin = mgos_sys_config_get_ssd1306_rst_gpio();
-	if (rstPin) {
+	if (rstPin && rstPin >= 0) {
 		LOG (LL_INFO, ("Found reset pin %d", rstPin));
-		if (rstPin >= 0) {
-			mgos_gpio_set_mode(rstPin, MGOS_GPIO_MODE_OUTPUT);
-	//		mgos_gpio_set_pull(pin, MGOS_GPIO_PULL_UP);
-			mgos_gpio_write(rstPin, 0);	
-			mgos_usleep(100 * 1000);
-			mgos_gpio_write(rstPin, 1);	
-		}
+		mgos_gpio_set_mode(rstPin, MGOS_GPIO_MODE_OUTPUT);
+		mgos_gpio_set_pull(rstPin, MGOS_GPIO_PULL_UP);
+		mgos_gpio_write(rstPin, 0);	
+		mgos_usleep(200 * 1000);
+		mgos_gpio_write(rstPin, 1);	
 	}
 }
 
