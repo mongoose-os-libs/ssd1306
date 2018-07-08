@@ -715,6 +715,7 @@ bool mgos_ssd1306_init (void)
   s_global_ssd1306 = mgos_ssd1306_create (mgos_sys_config_get_ssd1306 ());
   int rstPin = mgos_sys_config_get_ssd1306_i2c_rst_gpio();
 	if (rstPin && rstPin >= 0) {
+		LOG (LL_INFO, ("Found reset pin %d", rstPin));
 		mgos_gpio_set_mode(rstPin, MGOS_GPIO_MODE_OUTPUT);
 //		mgos_gpio_set_pull(pin, MGOS_GPIO_PULL_UP);
 		mgos_gpio_write(rstPin, 0);	
