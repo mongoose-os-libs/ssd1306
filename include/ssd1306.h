@@ -37,6 +37,8 @@
 #include "mgos_init.h"
 #include "mgos_sys_config.h"
 #include "mgos_system.h"
+#include "mgos_config.h"
+#include "mgos_gpio.h"
 
 #include "fonts.h"
 
