@@ -84,7 +84,7 @@ let SSD1306 = {
    * @return Screen width, in pixels.
    */
   getWidth: function() {  
-    return this._getWidth();
+    return this._getWidth(this._oled);
   },
   
   /**
@@ -93,7 +93,7 @@ let SSD1306 = {
    * @return Screen height, in pixels.
    */
   getHeight: function() { 
-    return this._getHeight();
+    return this._getHeight(this._oled;
   },
 
   /**
