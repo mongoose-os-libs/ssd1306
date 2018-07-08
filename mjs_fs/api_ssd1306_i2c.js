@@ -58,6 +58,7 @@ let SSD1306 = {
   _rotateDisplay: ffi('void mgos_ssd1306_rotate_display(void *, int)'),
   _updateBuffer: ffi('void mgos_ssd1306_update_buffer(void *, void *, int)'),
   _command: ffi('void mgos_ssd1306_command(void *, int)'),
+  _start: ffi('void mgos_ssd1306_start(void *)'),
   
   /**
    * @brief Init function, need to be called before using the api
@@ -66,14 +67,7 @@ let SSD1306 = {
     let myI2C = I2C.get_default();
     I2C.write(myI2C, Cfg.get('ssd1306.address'), "\0x0", 1, 1);
     this._oled = this._getGlobal();
-    let rstPin = Cfg.get('ssd1306.rst_gpio');
-    if (rstPin) {
-	    GPIO.set_mode(rstPin, GPIO.MODE_OUTPUT);
-	    GPIO.set_pull(rstPin, GPIO.PULL_UP);
-	    GPIO.write(rstPin, 0);
-	    Sys.usleep(100 * 1000);
-	    GPIO.write(rstPin, 1);
-		}    
+    this._start(this._oled);
     this.clear();
   },
 

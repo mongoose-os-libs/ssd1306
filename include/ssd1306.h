@@ -327,6 +327,11 @@ extern "C"
    */
   void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd);
 
+  /**
+   * @brief Start the displays functionality
+   */
+	void mgos_ssd1306_start (struct mgos_ssd1306 *oled);
+	
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
