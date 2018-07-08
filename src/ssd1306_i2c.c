@@ -711,7 +711,16 @@ bool mgos_ssd1306_init (void)
 {
   if (!mgos_sys_config_get_ssd1306_enable ())
     return true;
+
   s_global_ssd1306 = mgos_ssd1306_create (mgos_sys_config_get_ssd1306 ());
+  int rstPin = mgos_config_get_ssd1306_i2c_rst_gpio();
+	if (rstPin) {
+		mgos_gpio_set_mode(pin, MGOS_GPIO_MODE_OUTPUT);
+//		mgos_gpio_set_pull(pin, MGOS_GPIO_PULL_UP);
+		mgos_gpio_write(rstPin, 0);	
+		mgos_sys_usleep(100 * 1000);
+		mgos_gpio_write(rstPin, 1);	
+	}
   return (s_global_ssd1306 != NULL);
 }
 
