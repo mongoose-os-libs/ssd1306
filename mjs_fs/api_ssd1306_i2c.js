@@ -58,6 +58,7 @@ let SSD1306 = {
   _rotateDisplay: ffi('void mgos_ssd1306_rotate_display(void *)'),
   _updateBuffer: ffi('void mgos_ssd1306_update_buffer(void *, void *, int)'),
   _command: ffi('void mgos_ssd1306_command(void *, int)'),
+  _test: ffi('void mgos_ssd1306_rotate_display(void *, int)'),
   
   /**
    * @brief Init function, need to be called before using the api
@@ -306,6 +307,10 @@ let SSD1306 = {
    *
    * @param boolean alt, if the current way won't work, try the second one
    */
+  testDisplay: function(alt) {
+  	this._test(this._oled, alt);
+  },
+
   rotateDisplay: function(alt) {
   	if (alt) {
 			this._command(this._oled, 0xA1);

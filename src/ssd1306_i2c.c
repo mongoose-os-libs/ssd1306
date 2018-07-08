@@ -664,11 +664,14 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt)
 {
   if (oled == NULL)
     return;
+  LOG (LL_INFO, ("Rotate display ..."));
 
 	if (alt) {
+	  LOG (LL_INFO, ("... the alternative way!"));
 	  _command (oled, 0xA1);
 	  _command (oled, 0xC8);
 	}	else {
+	  LOG (LL_INFO, ("... the default way!"));
 	  _command (oled, 0xA0);
 	  _command (oled, 0xC0);
 	}
