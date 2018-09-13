@@ -31,5 +31,6 @@ tags:
   - c
   - i2c
   - ssd1306
+  - docs:drivers:SSD1306 OLED
 
 manifest_version: 2017-09-29
