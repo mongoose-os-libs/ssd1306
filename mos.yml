@@ -4,7 +4,7 @@ description: Implements SSD1306 OLED driver on Mongoose OS
 type: lib
 version: 1.0
 
-platforms: [ esp32 ]
+platforms: [ esp8266, esp32 ]
 
 libs:
   - origin: https://github.com/mongoose-os-libs/i2c
@@ -30,9 +30,16 @@ config_schema:
   - ["ssd1306.i2c.scl_gpio", "i", 4, {title: "GPIO to use for SCL"}]
   - ["ssd1306.rst_gpio", "i", -1, {title: "optional GPIO to use for RST"}]
 
+conds:
+  - when: mos.platform == "esp8266"
+    apply:
+      cdefs:
+        I2C_NO_UNIT_NO: 1
+
 tags:
   - c
   - i2c
   - ssd1306
+  - docs:drivers:SSD1306 OLED
 
 manifest_version: 2017-09-29

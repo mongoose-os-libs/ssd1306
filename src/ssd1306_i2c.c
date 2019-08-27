@@ -64,7 +64,9 @@ struct mgos_ssd1306 *mgos_ssd1306_create (const struct mgos_config_ssd1306 *cfg)
     if (i2c_cfg == NULL)
       return NULL;
     i2c_cfg->enable = cfg->i2c.enable;
+#ifndef I2C_NO_UNIT_NO
     i2c_cfg->unit_no = cfg->i2c.unit_no;
+#endif
     i2c_cfg->freq = cfg->i2c.freq;
     i2c_cfg->debug = cfg->i2c.debug;
     i2c_cfg->scl_gpio = cfg->i2c.scl_gpio;
@@ -519,7 +521,6 @@ uint8_t mgos_ssd1306_draw_char (struct mgos_ssd1306 *oled, uint8_t x, uint8_t y,
   if (oled->font == NULL)
     return 0;
 
-  LOG (LL_DEBUG, ("Drawing %c at %d,%d", c, x, y));
   // we always have space in the font set
   if ((c < oled->font->char_start) || (c > oled->font->char_end))
     c = ' ';
