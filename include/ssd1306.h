@@ -1,12 +1,46 @@
+/**
+ * Copyright 2018 Brandon Davidson <brad@oatmail.org>
+ * copyright 2018 Manfred Mueller-Spaeth <fms1961@gmail.com> (changes, additions)
+ *  
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR 
+ * A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ **/
+
 #ifndef SSD1306_H
 #define SSD1306_H
 
-#include "mgos_features.h"
-
+#include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
+
+#include "mgos_features.h"
+#include "mgos_i2c.h"
+
+#include "common/cs_dbg.h"
 
 #include "mgos_init.h"
 #include "mgos_sys_config.h"
+#include "mgos_system.h"
+#include "mgos_config.h"
+#include "mgos_gpio.h"
+
+#include "fonts.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -270,6 +304,14 @@ extern "C"
   void mgos_ssd1306_flip_display (struct mgos_ssd1306 *oled, bool horizontal, bool vertical);
 
   /**
+   * @brief Rotates the display with an amount of 180 degrees
+
+   * @param oled SSD1306 driver handle.
+   * @param bool alt, if the current way won't work, try the second one
+   */
+	void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt);
+
+  /**
    * @brief Copy pre-rendered bytes directly into the bitmap.
    *
    * @param oled SSD1306 driver handle.
@@ -278,6 +320,18 @@ extern "C"
    */
   void mgos_ssd1306_update_buffer (struct mgos_ssd1306 *oled, uint8_t * data, uint16_t length);
 
+  /**
+   * @brief Sends a command without parameters to the display
+   *
+   * @param int command
+   */
+  void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd);
+
+  /**
+   * @brief Start the displays functionality
+   */
+	void mgos_ssd1306_start (struct mgos_ssd1306 *oled);
+	
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
