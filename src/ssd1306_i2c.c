@@ -64,7 +64,7 @@ struct mgos_ssd1306 *mgos_ssd1306_create (const struct mgos_config_ssd1306 *cfg)
     if (i2c_cfg == NULL)
       return NULL;
     i2c_cfg->enable = cfg->i2c.enable;
-#ifndef I2C_NO_UNIT_NO
+#ifdef MGOS_CONFIG_HAVE_I2C_UNIT_NO
     i2c_cfg->unit_no = cfg->i2c.unit_no;
 #endif
     i2c_cfg->freq = cfg->i2c.freq;
@@ -642,13 +642,13 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt) {
     return;
 
   LOG (LL_DEBUG, ("Rotate display ..."));
-	if (alt) {
-	  _command (oled, 0xA1);
-	  _command (oled, 0xC8);
-	}	else {
-	  _command (oled, 0xA0);
-	  _command (oled, 0xC0);
-	}
+  if (alt) {
+    _command (oled, 0xA1);
+    _command (oled, 0xC8);
+  } else {
+    _command (oled, 0xA0);
+    _command (oled, 0xC0);
+  }
   LOG (LL_DEBUG, (alt ? "... the alternative way!" : "... the default way!"));
 }
 
@@ -682,14 +682,13 @@ void mgos_ssd1306_command (struct mgos_ssd1306 *oled, uint8_t cmd) {
 
 void mgos_ssd1306_start (struct mgos_ssd1306 *oled) {
   int rstPin = mgos_sys_config_get_ssd1306_rst_gpio();
-	if (rstPin && rstPin >= 0) {
-		LOG (LL_INFO, ("Found reset pin %d", rstPin));
-		mgos_gpio_set_mode(rstPin, MGOS_GPIO_MODE_OUTPUT);
-		mgos_gpio_set_pull(rstPin, MGOS_GPIO_PULL_UP);
-		mgos_gpio_write(rstPin, 0);	
-		mgos_usleep(200 * 1000);
-		mgos_gpio_write(rstPin, 1);	
-	}
+  if (rstPin >= 0) {
+    LOG (LL_INFO, ("Found reset pin %d", rstPin));
+    mgos_gpio_setup_output(rstPin, 0);
+    mgos_msleep(200);
+    mgos_gpio_write(rstPin, 1);
+  }
+  (void) oled;
 }
 
 bool mgos_ssd1306_init (void) {
