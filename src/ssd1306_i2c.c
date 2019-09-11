@@ -553,8 +553,8 @@ uint8_t mgos_ssd1306_draw_char (struct mgos_ssd1306 *oled, uint8_t x, uint8_t y,
   return (oled->font->char_descriptors[c].width);
 }
 
-uint8_t
-mgos_ssd1306_draw_string_color (struct mgos_ssd1306 * oled, uint8_t x, uint8_t y, char *str, mgos_ssd1306_color_t foreground, mgos_ssd1306_color_t background) {
+uint8_t mgos_ssd1306_draw_string_color (struct mgos_ssd1306 * oled, uint8_t x, uint8_t y, const char *str,
+                                        mgos_ssd1306_color_t foreground, mgos_ssd1306_color_t background) {
   uint8_t t = x;
 
   if (oled == NULL)
@@ -576,12 +576,12 @@ mgos_ssd1306_draw_string_color (struct mgos_ssd1306 * oled, uint8_t x, uint8_t y
   return (x - t);
 }
 
-uint8_t mgos_ssd1306_draw_string (struct mgos_ssd1306 * oled, uint8_t x, uint8_t y, char *str) {
+uint8_t mgos_ssd1306_draw_string (struct mgos_ssd1306 * oled, uint8_t x, uint8_t y, const char *str) {
   return mgos_ssd1306_draw_string_color (oled, x, y, str, SSD1306_COLOR_WHITE, SSD1306_COLOR_TRANSPARENT);
 }
 
 // return width of string
-uint8_t mgos_ssd1306_measure_string (struct mgos_ssd1306 * oled, char *str) {
+uint8_t mgos_ssd1306_measure_string (struct mgos_ssd1306 * oled, const char *str) {
   uint8_t w = 0;
   unsigned char c;
 
