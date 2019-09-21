@@ -19,6 +19,8 @@ config_schema:
   - ["ssd1306.width", "i", 128, {title: "Screen width"}]
   - ["ssd1306.height", "i", 64, {title: "Screen height"}]
   - ["ssd1306.address", "i", 0x3c, {title: "Screen controller I2C address"}]
+  - ["ssd1306.col_offset", "i", 0, {title: "Screen column offset; some smaller screens need this"}]
+  - ["ssd1306.com_pins", "i", 0x12, {title: "Screen COM pins configuration, depends on physical attachemnt of the panel to the chip; 0x02, 0x12, 0x22 or 0x32 are valid values"}]
   - ["ssd1306.i2c", "o", {title: "SSD1306 I2C settings"}]
   - ["ssd1306.i2c.enable", "b", true, {title: "Enable SSD1306-specific I2C configuration"}]
   - ["ssd1306.i2c.freq", "i", 400000, {title: "Clock frequency"}]

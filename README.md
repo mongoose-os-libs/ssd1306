@@ -8,3 +8,18 @@ This driver should support displays of any resolution supported by the SSD1306.
 
 This driver does not yet support SPI operation.
 
+## Note about the [LOLIN / WEMOS OLED shield](https://wiki.wemos.cc/products:d1_mini_shields:oled_shield)
+
+It uses a 64x48 panel with column offset of 32, correct configuration for it is as follows:
+
+```yaml
+config_schema:
+  - ["i2c.enable", true]
+  - ["i2c.sda_gpio", 4]
+  - ["i2c.scl_gpio", 5]
+  - ["ssd1306.i2c.enable", false]  # Use system bus.
+  - ["ssd1306.enable", true]
+  - ["ssd1306.width", 64]
+  - ["ssd1306.height", 48]
+  - ["ssd1306.col_offset", 32]
+```
