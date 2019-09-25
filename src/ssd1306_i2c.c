@@ -1,24 +1,24 @@
 /**
  * Copyright 2018 Brandon Davidson <brad@oatmail.org>
  * copyright 2018 Manfred Mueller-Spaeth <fms1961@gmail.com> (changes, additions)
- *  
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
  * of the Software, and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
  * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR 
  * A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- * 
+ *
  **/
 #include "ssd1306.h"
 
@@ -32,13 +32,16 @@ typedef struct mgos_ssd1306 {
   uint8_t address;              // I2C address
   uint8_t width;                // panel width
   uint8_t height;               // panel height
-  uint8_t *buffer;              // display buffer
+  uint8_t col_offset;           // some displays have panel's starting column
+                                // connected to seg pin other than 0.
+  uint8_t com_pins;             // COM pins configuration
   uint8_t refresh_top;          // 'Dirty' window corners
   uint8_t refresh_left;
   uint8_t refresh_right;
   uint8_t refresh_bottom;
   const font_info_t *font;      // current font
   struct mgos_i2c *i2c;         // i2c connection
+  uint8_t buffer[0];            // display buffer (continues beyond the struct)
 } mgos_ssd1306;
 
 static struct mgos_ssd1306 *s_global_ssd1306;
@@ -49,14 +52,15 @@ static inline bool _command (struct mgos_ssd1306 *oled, uint8_t cmd) {
 
 struct mgos_ssd1306 *mgos_ssd1306_create (const struct mgos_config_ssd1306 *cfg) {
   struct mgos_ssd1306 *oled = NULL;
-  oled = calloc (1, sizeof (*oled));
+  oled = calloc (1, sizeof (*oled) + cfg->width * cfg->height / 8);
   if (oled == NULL)
     return NULL;
 
   oled->address = cfg->address;
   oled->width = cfg->width;
   oled->height = cfg->height;
-  oled->buffer = calloc (cfg->width * cfg->height / 8, sizeof (uint8_t));
+  oled->col_offset = cfg->col_offset;
+  oled->com_pins = cfg->com_pins;
   if (cfg->i2c.enable && cfg->i2c.scl_gpio != -1 && cfg->i2c.sda_gpio != -1) {
     LOG (LL_INFO, ("Using SSD1306 GPIO config"));
     struct mgos_config_i2c *i2c_cfg = NULL;
@@ -92,7 +96,7 @@ struct mgos_ssd1306 *mgos_ssd1306_create (const struct mgos_config_ssd1306 *cfg)
   _command (oled, 0xa1);        // SSD1306_SEGREMAP | 1
   _command (oled, 0xc8);        // SSD1306_COMSCANDEC
   _command (oled, 0xda);        // SSD1306_SETCOMPINS
-  _command (oled, oled->height < 64 ? 0x02 : 0x12);
+  _command (oled, oled->com_pins);
   _command (oled, 0x81);        // SSD1306_SETCONTRAST
   _command (oled, 0x7f);        // default contrast ratio
   _command (oled, 0xa4);        // SSD1306_DISPLAYALLON_RESUME
@@ -175,23 +179,23 @@ void mgos_ssd1306_refresh (struct mgos_ssd1306 *oled, bool force) {
     return;
 
   if (force || (oled->refresh_top <= 0 && oled->refresh_bottom >= oled->height - 1 && oled->refresh_left <= 0 && oled->refresh_right >= oled->width - 1)) {
-    _command (oled, 0x21);      // SSD1306_COLUMNADDR
-    _command (oled, 0);         // column start
-    _command (oled, 127);       // column end
-    _command (oled, 0x22);      // SSD1306_PAGEADDR
-    _command (oled, 0);         // page start
+    _command (oled, 0x21);                                // SSD1306_COLUMNADDR
+    _command (oled, oled->col_offset);                    // column start
+    _command (oled, oled->col_offset + oled->width - 1);  // column end
+    _command (oled, 0x22);                      // SSD1306_PAGEADDR
+    _command (oled, 0);                         // page start
     _command (oled, (oled->height / 8) - 1);    // page end
     mgos_i2c_write_reg_n (oled->i2c, oled->address, 0x40, oled->height * oled->width / 8, oled->buffer);
   } else if ((oled->refresh_top <= oled->refresh_bottom)
              && (oled->refresh_left <= oled->refresh_right)) {
     page_start = oled->refresh_top / 8;
     page_end = oled->refresh_bottom / 8;
-    _command (oled, 0x21);      // SSD1306_COLUMNADDR
-    _command (oled, oled->refresh_left);        // column start
-    _command (oled, oled->refresh_right);       // column end
-    _command (oled, 0x22);      // SSD1306_PAGEADDR
-    _command (oled, page_start);        // page start
-    _command (oled, page_end);  // page end
+    _command (oled, 0x21);                                    // SSD1306_COLUMNADDR
+    _command (oled, oled->col_offset + oled->refresh_left);   // column start
+    _command (oled, oled->col_offset + oled->refresh_right);  // column end
+    _command (oled, 0x22);        // SSD1306_PAGEADDR
+    _command (oled, page_start);  // page start
+    _command (oled, page_end);    // page end
 
     for (uint8_t i = page_start; i <= page_end; ++i) {
       uint16_t start = i * oled->width + oled->refresh_left;
@@ -641,7 +645,6 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt) {
   if (oled == NULL)
     return;
 
-  LOG (LL_DEBUG, ("Rotate display ..."));
   if (alt) {
     _command (oled, 0xA1);
     _command (oled, 0xC8);
@@ -649,16 +652,14 @@ void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt) {
     _command (oled, 0xA0);
     _command (oled, 0xC0);
   }
-  LOG (LL_DEBUG, (alt ? "... the alternative way!" : "... the default way!"));
 }
 
 void mgos_ssd1306_flip_display (struct mgos_ssd1306 *oled, bool horizontal, bool vertical) {
   if (oled == NULL)
     return;
 
-  uint8_t compins = oled->height < 64 ? 0x02 : 0x12;
   _command (oled, 0xda);
-  _command (oled, compins | (horizontal << 5));
+  _command (oled, oled->com_pins | (horizontal << 5));
   _command (oled, vertical ? 0xc0 : 0xc8);
 }
 

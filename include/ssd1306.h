@@ -1,24 +1,24 @@
 /**
  * Copyright 2018 Brandon Davidson <brad@oatmail.org>
  * copyright 2018 Manfred Mueller-Spaeth <fms1961@gmail.com> (changes, additions)
- *  
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
  * of the Software, and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
  * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR 
  * A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- * 
+ *
  **/
 
 #ifndef SSD1306_H
@@ -309,7 +309,7 @@ extern "C"
    * @param oled SSD1306 driver handle.
    * @param bool alt, if the current way won't work, try the second one
    */
-	void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt);
+  void mgos_ssd1306_rotate_display (struct mgos_ssd1306 *oled, bool alt);
 
   /**
    * @brief Copy pre-rendered bytes directly into the bitmap.
@@ -330,8 +330,8 @@ extern "C"
   /**
    * @brief Start the displays functionality
    */
-	void mgos_ssd1306_start (struct mgos_ssd1306 *oled);
-	
+  void mgos_ssd1306_start (struct mgos_ssd1306 *oled);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
