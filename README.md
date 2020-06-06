@@ -8,7 +8,7 @@ This driver should support displays of any resolution supported by the SSD1306.
 
 This driver does not yet support SPI operation.
 
-## Note about the [LOLIN / WEMOS OLED shield](https://wiki.wemos.cc/products:d1_mini_shields:oled_shield)
+## [LOLIN / WEMOS OLED shield](https://wiki.wemos.cc/products:d1_mini_shields:oled_shield)
 
 It uses a 64x48 panel with column offset of 32, correct configuration for it is as follows:
 
@@ -22,4 +22,13 @@ config_schema:
   - ["ssd1306.width", 64]
   - ["ssd1306.height", 48]
   - ["ssd1306.col_offset", 32]
+```
+
+## MakerHawk I2C OLED Display Module 0.91 Inch 128X32
+
+```yaml
+config_schema:
+  - ["ssd1306.width", 128]
+  - ["ssd1306.height", 32]
+  - ["ssd1306.com_pins", 0x02]
 ```
