@@ -57,13 +57,6 @@ extern "C"
   } mgos_ssd1306_color_t;
 
   /**
-   * @brief Standard Mongoose-OS init hook.
-   *
-   * @return True if module was enabled and successfully initialized.
-   */
-  bool mgos_ssd1306_init (void);
-
-  /**
    * @brief Access the SSD1306 driver handle that is set up via sysconfig.
    *
    * @return Preconfigured SSD1306 driver handle.
