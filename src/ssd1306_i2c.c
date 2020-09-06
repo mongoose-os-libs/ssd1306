@@ -63,19 +63,17 @@ struct mgos_ssd1306 *mgos_ssd1306_create (const struct mgos_config_ssd1306 *cfg)
   oled->com_pins = cfg->com_pins;
   if (cfg->i2c.enable && cfg->i2c.scl_gpio != -1 && cfg->i2c.sda_gpio != -1) {
     LOG (LL_INFO, ("Using SSD1306 GPIO config"));
-    struct mgos_config_i2c *i2c_cfg = NULL;
-    i2c_cfg = calloc (1, sizeof (*i2c_cfg));
-    if (i2c_cfg == NULL)
-      return NULL;
-    i2c_cfg->enable = cfg->i2c.enable;
+    const struct mgos_config_i2c i2c_cfg = {
+      .enable = cfg->i2c.enable,
 #ifdef MGOS_CONFIG_HAVE_I2C_UNIT_NO
-    i2c_cfg->unit_no = cfg->i2c.unit_no;
+      .unit_no = cfg->i2c.unit_no,
 #endif
-    i2c_cfg->freq = cfg->i2c.freq;
-    i2c_cfg->debug = cfg->i2c.debug;
-    i2c_cfg->scl_gpio = cfg->i2c.scl_gpio;
-    i2c_cfg->sda_gpio = cfg->i2c.sda_gpio;
-    oled->i2c = mgos_i2c_create (i2c_cfg);
+      .freq = cfg->i2c.freq,
+      .debug = cfg->i2c.debug,
+      .scl_gpio = cfg->i2c.scl_gpio,
+      .sda_gpio = cfg->i2c.sda_gpio
+    };
+    oled->i2c = mgos_i2c_create (&i2c_cfg);
   } else {
     LOG (LL_INFO, ("Using global GPIO config"));
     oled->i2c = mgos_i2c_get_global ();
